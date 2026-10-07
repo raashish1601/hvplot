@@ -69,6 +69,12 @@ class TestChart2D(ComparisonTestCase):
             plot, HeatMap((['x', 'y'], [0, 1, 2], self.df.values), ['columns', 'index'], 'value')
         )
 
+    def test_vectorfield_mag_sets_magnitude(self):
+        df = pd.DataFrame({'x': [0, 1], 'y': [0, 1], 'angle': [0, 1.5], 'mag': [1, 2]})
+        plot = df.hvplot.vectorfield(x='x', y='y', angle='angle', mag='mag')
+        opts = Store.lookup_options('bokeh', plot, 'plot')
+        assert opts.kwargs['magnitude'] == 'mag'
+
     def test_heatmap_2d_derived_x_and_y(self):
         plot = self.time_df.hvplot.heatmap(x='time.hour', y='time.day', C='temp')
         assert plot.kdims == ['time.hour', 'time.day']

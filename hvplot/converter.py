@@ -3421,6 +3421,9 @@ class HoloViewsConverter:
 
         element = self._get_element('vectorfield')
         cur_opts, compat_opts = self._get_compat_opts('VectorField')
+        if mag:
+            # HoloViews only scales the arrows when told which dimension is the magnitude
+            cur_opts['magnitude'] = mag
         if self.geo:
             params['crs'] = self.crs
         return redim_(
